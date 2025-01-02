@@ -42,9 +42,13 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Increase brightness
-bindsym XF86MonBrightnessUp exec xbacklight -inc 5 && xbacklight > /home/tanudeep/.config/brightness && $refresh_i3status
-# Decrease brightness
-bindsym XF86MonBrighnessDown exec xbacklight -dec 5 && xbacklight > /home/tanudeep/.config/brightness && $refresh_i3status
+# bindsym XF86MonBrightnessUp exec xbacklight -inc 5 && xbacklight > /home/tanudeep/.config/brightness && $refresh_i3status
+# # Decrease brightness
+# bindsym XF86MonBrighnessDown exec xbacklight -dec 5 && xbacklight > /home/tanudeep/.config/brightness && $refresh_i3status
+
+bindsym XF86MonBrightnessUp exec --no-startup-id sudo /usr/bin/brightnessctl set +10%
+
+bindsym XF86MonBrightnessDown exec --no-startup-id sudo /usr/bin/brightnessctl set 10%-
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -66,7 +70,7 @@ gaps outer 1
 default_border pixel 1
 bindsym $mod+l exec i3lock -c 000000
 bindsym $mod+b exec google-chrome-stable
-bindsym $mod+t exec thunar
+bindsym $mod+t exec nemo
 bindsym $mod+Shift+c exec code -g ~/.config/i3/config
 bindsym $mod+c exec code -n
 bindsym $mod+Shift+P exec flameshot gui
@@ -221,45 +225,46 @@ bindsym $mod+r mode "resize"
 #     }
 # }
 
-# General colors
-set $bg #282828
-set $fg #ebdbb2
-set $black #1d2021
-set $gray #a89984
-set $red #cc241d
-set $green #98971a
-set $yellow #d79921
-set $blue #458588
-set $purple #b16286
-set $aqua #689d6a
-set $orange #d65d0e
+# # General colors
+# set $bg #282828
+# set $fg #ebdbb2
+# set $black #1d2021
+# set $gray #a89984
+# set $red #cc241d
+# set $green #98971a
+# set $yellow #d79921
+# set $blue #458588
+# set $purple #b16286
+# set $aqua #689d6a
+# set $orange #d65d0e
 
-# Client window colors
-client.focused          $orange  $bg       $fg       $orange  $orange
-client.focused_inactive $gray    $bg       $gray     $gray    $gray
-client.unfocused        $bg      $bg       $gray     $bg      $bg
-client.urgent           $red     $red      $fg       $red     $red
-client.placeholder      $bg      $bg       $fg       $bg      $bg
+# # Client window colors
+# client.focused          $orange  $bg       $fg       $orange  $orange
+# client.focused_inactive $gray    $bg       $gray     $gray    $gray
+# client.unfocused        $bg      $bg       $gray     $bg      $bg
+# client.urgent           $red     $red      $fg       $red     $red
+# client.placeholder      $bg      $bg       $fg       $bg      $bg
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-# bar {
-#        status_command i3status
-# 	position bottom
-# 	output primary
-# 	# tray_output nones
-# 	font pango:JetBrains Mono 8
-# 	separator_symbol |
-# }
+bar {
+       status_command i3status --config ~/.config/i3/i3status.conf
+	position bottom
+	output primary
+	# tray_output all
+	# font pango:JetBrains Mono 8
+        font pango:JetBrains Mono, FontAwesome 8
+	separator_symbol |
+}
 
-# bar {
-#         position bottom
+#  bar {
+#          position bottom
 # 	status_command ~/.local/bin/bumblebee-status -m cpu memory battery datetime \
 # 		brightness pasink pasource xrandr caffeine -p time.format="%H:%M" brightness.step -t  iceberg-contrast
-# }
+#  }
 
-exec_always --no-startup-id ~/.config/polybar/launch.sh
+# exec_always --no-startup-id ~/.config/polybar/launch.sh 
 
 
 exec --no-startup-id picom --config ~/.config/picom.conf -b 
